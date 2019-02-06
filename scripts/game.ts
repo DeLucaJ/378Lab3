@@ -13,7 +13,7 @@ class GameApp
             default: 'arcade',
             arcade: {
                 gravity: { y: 100 },
-                debug: false
+                debug: true
             }
         },
         backgroundColor: '#CCCCCC',
