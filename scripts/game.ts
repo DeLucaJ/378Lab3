@@ -16,7 +16,7 @@ class GameApp
                 debug: true
             }
         },
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#aaddff',
         render : {
             pixelArt: true
         },
