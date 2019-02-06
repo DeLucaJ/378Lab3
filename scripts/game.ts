@@ -6,13 +6,13 @@ class GameApp
     config: GameConfig = {
         type: Phaser.AUTO,
         parent: 'game',
-        width: 800,
-        height: 600,
+        width: 1400,
+        height: 700,
         scene: [ MainScene ],
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 100 },
+                gravity: { y: 500 },
                 debug: true
             }
         },
