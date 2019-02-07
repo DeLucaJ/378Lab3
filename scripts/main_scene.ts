@@ -12,18 +12,18 @@ class MainScene extends Phaser.Scene
     preload () {
         this.load.image(
             "buildings",
-            "../assets/tilesets/building_spritesheet.png"
+            "assets/tilesets/building_spritesheet.png"
         );
         this.load.image(
             "tiles",
-            "../assets/tilesets/tiles_spritesheet.png"
+            "assets/tilesets/tiles_spritesheet.png"
         );
         this.load.tilemapTiledJSON(
             "map",
-            "../assets/tilemaps/basic-map.json"
+            "assets/tilemaps/basic-map.json"
         );
 
-        this.load.image("player", "../assets/tilesets/adventurer_stand.png");
+        this.load.image("player", "assets/tilesets/adventurer_stand.png");
     }
 
     create () {
