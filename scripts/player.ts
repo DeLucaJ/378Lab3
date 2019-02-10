@@ -25,7 +25,7 @@ class Player
             d: D
         });
 
-        this.sprite.body.collideWorldBounds = true;
+        this.sprite.setCollideWorldBounds(true);
     }
 
     update () {
