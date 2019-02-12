@@ -9,7 +9,7 @@ class Player
         this.scene = scene;
 
         //may pass as an argument later
-        this.sprite = scene.physics.add.sprite(x, y, "player");
+        this.sprite = scene.physics.add.sprite(x, y, "sheet");
         this.sprite.setDrag(1000, 0);
         this.sprite.setMaxVelocity(300, 400);
         this.sprite.setSize(80, 112);
@@ -32,22 +32,28 @@ class Player
         const onGround = this.sprite.body.blocked.down;
         const acceleration = onGround ? 600 : 200;
 
+        this.sprite.setScale(1).play('sheet-all');
+
         if (this.keys.left.isDown || this.keys.a.isDown) {
             this.sprite.setAccelerationX(-acceleration);
             this.sprite.setFlipX(true);
+            this.sprite.setScale(1).play('sheet-walk');
         } 
         else if (this.keys.right.isDown || this.keys.d.isDown) {
             this.sprite.setAccelerationX(acceleration);
             this.sprite.setFlipX(false);
+            this.sprite.setScale(1).play('sheet-walk');
         }
         else {
             this.sprite.setAccelerationX(0);
+            //this.sprite.setScale(1).play('sheet-idle');
         }
 
         //only allowed if they are on ground
         if (onGround && (this.keys.up.isDown || this.keys.w.isDown)){
             //velocity instead of acceleration b/c there is global gravity
             this.sprite.setVelocityY(-500);
+            this.sprite.setScale(1).play('sheet-jump');
         }
     }
 
