@@ -42,19 +42,13 @@ class MainScene extends Phaser.Scene
         //spawnpoints
         const playerSpawn = map.findObject("spawns", obj => obj.name === "player-spawn");
         //will probably through warnings
-        this.player = new Player(this, 700, 500);
+        //this.player = new Player(this, 700, 500);
 
         worldLayer.setCollisionByProperty({collides: true});
         
         const debugGraphics = this.add.graphics().setAlpha(0.75);
         this.physics.add.collider(this.player.sprite, worldLayer);
-
-        /*worldLayer.renderDebug(debugGraphics, {
-            tileColor: null, // Color of non-colliding tiles
-            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });*/
-    
+        
         this.cameras.main.startFollow(this.player.sprite);
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     }

@@ -3,6 +3,7 @@ class Player
     scene : Phaser.Scene;
     sprite : Phaser.Physics.Arcade.Sprite;
     keys;
+    climbing : boolean;
 
     constructor(scene, x, y)
     {
@@ -30,18 +31,18 @@ class Player
 
     update () {
         const onGround = this.sprite.body.blocked.down;
-        const acceleration = onGround ? 600 : 200;
+        const velocityX = 600;//onGround ? 600 : 200;
 
         if (this.keys.left.isDown || this.keys.a.isDown) {
-            this.sprite.setAccelerationX(-acceleration);
+            this.sprite.setVelocityX(-velocityX);
             this.sprite.setFlipX(true);
         } 
         else if (this.keys.right.isDown || this.keys.d.isDown) {
-            this.sprite.setAccelerationX(acceleration);
+            this.sprite.setVelocityX(velocityX);
             this.sprite.setFlipX(false);
         }
         else {
-            this.sprite.setAccelerationX(0);
+            this.sprite.setVelocityX(0);
         }
 
         //only allowed if they are on ground
@@ -53,5 +54,10 @@ class Player
 
     destroy() {
         this.sprite.destroy();
+    }
+
+    isClimbing() {
+        console.log("This asshole should be climbing!");
+        this.climbing = true;
     }
 }

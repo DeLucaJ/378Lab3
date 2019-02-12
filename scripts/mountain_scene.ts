@@ -1,7 +1,7 @@
 class MountainScene extends Phaser.Scene
 {
     controls : Phaser.Cameras.Controls.FixedKeyControl;
-    player;
+    player : Player;
 
     constructor() {
         super("MountainScene");
@@ -20,7 +20,7 @@ class MountainScene extends Phaser.Scene
             "map",
             "assets/tilemaps/level-1.json"
         );
-
+        this.load.image("zork", "assets/tilesets/zork.png");
         this.load.image("player", "assets/tilesets/adventurer_stand.png");
     }
 
@@ -33,28 +33,40 @@ class MountainScene extends Phaser.Scene
         const ice = map.addTilesetImage("ice_sheet", "ice");
 
         //create layers
-        const platformLayer = map.createStaticLayer("platforms", tiles, 0, 0);
         const background = map.createStaticLayer("background", tiles, 0, 0);
-        const climbable = map.createStaticLayer("climable", ice, 0, 0);
+        const platforms = map.createStaticLayer("platforms", tiles, 0, 0);
+        const climbable = map.createDynamicLayer("climbable", ice, 0, 0);
+
+        this.physics.world.bounds.width = map.widthInPixels;
+        this.physics.world.bounds.height = map.heightInPixels;
 
         //spawnpoints
-        const playerSpawn = map.findObject("spawns", obj => obj.name === "player-spawn");
-        //will probably through warnings
-        this.player = new Player(this, 700, 500);
+        this.player = new Player(this, 50, 90 * 70);
+        const zork = this.physics.add.sprite(350, 300, "zork");
+        zork.displayHeight = 70; zork.displayWidth = 70;
+        zork.setCollideWorldBounds(true);
 
-        //worldLayer.setCollisionByProperty({collides: true});
-        
-        const debugGraphics = this.add.graphics().setAlpha(0.75);
-        //this.physics.add.collider(this.player.sprite, worldLayer);
+        platforms.setCollisionByProperty({collides: true});
+        map.forEachTile(
+            function (tile){ 
+                tile.collideDown = false;
+                tile.collideLeft = false;
+                tile.collideRight = false; 
+            },
+            this.game, 0, 0, map.width, map.height, {isNotEmpty: true}, platforms
+        );
 
-        /*worldLayer.renderDebug(debugGraphics, {
-            tileColor: null, // Color of non-colliding tiles
-            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });*/
-    
+        //climbing
+
+        this.physics.add.collider(platforms, this.player.sprite);
+        this.physics.add.collider(this.player.sprite, zork);
+        this.physics.add.collider(platforms, zork);
+        //this.physics.add.overlap(this.player.sprite, climbable); 
+
         this.cameras.main.startFollow(this.player.sprite);
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        
     }
 
     update () {

@@ -6,20 +6,20 @@ class GameApp
     config: GameConfig = {
         type: Phaser.AUTO,
         parent: 'game',
-        width: 1400,
+        width: 700,
         height: 700,
-        scene: [ MainScene ],
+        scene: [ MountainScene /*, MainScene*/ ],
         physics: {
             default: 'arcade',
             arcade: {
                 gravity: { y: 500 },
-                debug: false
+                debug: true
             }
         },
         backgroundColor: '#aaddff',
         render : {
             pixelArt: true
-        },
+        }
     }
 
     constructor () {
