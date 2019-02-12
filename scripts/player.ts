@@ -33,13 +33,18 @@ class Player
         const onGround = this.sprite.body.blocked.down;
         const velocityX = 600;//onGround ? 600 : 200;
 
+        if (onGround) this.sprite.setScale(1).play('sheet-all');
+        else this.sprite.setScale(1).play('sheet-jump');
+
         if (this.keys.left.isDown || this.keys.a.isDown) {
             this.sprite.setVelocityX(-velocityX);
             this.sprite.setFlipX(true);
+            if (onGround) this.sprite.setScale(1).play('sheet-walk');
         } 
         else if (this.keys.right.isDown || this.keys.d.isDown) {
             this.sprite.setVelocityX(velocityX);
             this.sprite.setFlipX(false);
+            if (onGround) this.sprite.setScale(1).play('sheet-walk');
         }
         else {
             this.sprite.setVelocityX(0);
